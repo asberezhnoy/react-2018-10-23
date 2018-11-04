@@ -7,6 +7,14 @@ class ArticleList extends Component {
     return <ul>{this.items}</ul>
   }
 
+  onOpen = (id) => {
+    if (this.props.toggleOpen) this.props.toggleOpen(id)
+  }
+
+  onClose = (id) => {
+    if (this.props.toggleOpen) this.props.toggleOpen(null)
+  }
+
   get items() {
     var { articles } = this.props
     if (articles === undefined) return null
@@ -16,7 +24,16 @@ class ArticleList extends Component {
     return articles.map((item) => {
       return (
         <li key={item.id}>
-          {<ExpandArticle title={item.title} article={item} />}
+          {
+            <ExpandArticle
+              id={item.id}
+              title={item.title}
+              isOpen={this.props.openTtemId === item.id}
+              article={item}
+              onOpen={this.onOpen}
+              onClose={this.onClose}
+            />
+          }
         </li>
       )
     })

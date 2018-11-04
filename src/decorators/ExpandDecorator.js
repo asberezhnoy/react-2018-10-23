@@ -3,13 +3,11 @@ import React, { Component } from 'react'
 export default (OriginComponen) =>
   class ExpandDecoratorComponent extends Component {
     state = {
-      isOpen: this.props.isOpen
+      isOpen: this.props.isOpen === undefined ? false : this.props.isOpen
     }
 
     render() {
       var { title } = this.props
-      console.log(this.props)
-      console.log(this.state)
 
       return (
         <div>
@@ -25,12 +23,18 @@ export default (OriginComponen) =>
     }
 
     handleClick = () => {
+      var isOpen = !this.state.isOpen
+
       this.setState({
-        isOpen: !this.state.isOpen
+        isOpen: isOpen
       })
+
+      if (isOpen && this.props.onOpen !== undefined)
+        this.props.onOpen(this.props.id)
+      else if (!isOpen && this.props.onClose !== undefined)
+        this.props.onClose(this.props.id)
     }
 
-    getBody() {
-      return this.state.isOpen ? <OriginComponen {...this.props} /> : null
-    }
+    getBody = () =>
+      this.state.isOpen ? <OriginComponen {...this.props} /> : null
   }

@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import ArticleList from './ArticleList'
 import articles from '../fixtures'
+import AccordionDecorator from '../decorators/AccordionDecorator'
 
 class App extends Component {
   render() {
+    var AccordionArticleList = AccordionDecorator(ArticleList)
+
     return (
       <div>
-        <ArticleList articles={articles} />
+        <AccordionArticleList articles={articles} />
       </div>
     )
   }
